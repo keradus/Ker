@@ -1,0 +1,16 @@
+{
+    "name": "keradus/Ker",
+    "description": "Ker - PHP library package",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "https://github.com/keradus/Ker",
+    "authors": [
+        {
+            "name": "Dariusz Rumiński",
+            "email": "dariusz.ruminski@gmail.com"
+        }
+    ],
+    "require": {
+
+    }
+}
