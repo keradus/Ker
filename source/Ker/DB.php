@@ -14,4 +14,19 @@ namespace Ker;
 class DB
 {
 
+    /**
+     * Hash definiujacy wyświetlane informacje debugowe.
+     * Klucze reprezentują odpowiadające im typy zapytań, specjalny klucz "all" wymusza wyświetlenie wszystkich debugów.
+     *
+     * @protected
+     */
+    protected $debug = array(
+        "all" => false,
+        "call" => false,
+        "delete" => false,
+        "insert" => false,
+        "select" => false,
+        "update" => false,
+    );
+
 }
