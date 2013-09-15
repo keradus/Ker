@@ -83,6 +83,22 @@ class DB
     }
 
     /**
+     * Metoda wywołująca procedurę składowaną.
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     */
+    public function call($_sql, $_params = array())
+    {
+        $this->showDebug("call", $_sql, $_params);
+
+        $statement = $this->instance->prepare($_sql);
+        $statement->execute($_params);
+        $statement->closeCursor();
+    }
+
+    /**
      * Metoda aktywuje lub deaktywuje debugowanie zapytan.
      *
      * @public
