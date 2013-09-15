@@ -99,6 +99,26 @@ class DB
     }
 
     /**
+     * Metoda zabezpieczająca wartości przed wysłaniem ich jako część zapytania SQL. Wykorzystywana gdy wartości nie da się przesłać jako parametrów.
+     *
+     * @public
+     * @param string|array $_value wartość/tablica wartości, które mają być zabezpieczona
+     * @return string|array zabezpieczona wartość/tablica wartości
+     */
+    public function escape($_value)
+    {
+        if (is_array($_value)) {
+            foreach ($_value AS $key => $val) {
+                $_value[$key] = substr($this->instance->quote($val), 1, -1);
+            }
+
+            return $_value;
+        }
+
+        return substr($this->instance->quote($_value), 1, -1);
+    }
+
+    /**
      * Metoda aktywuje lub deaktywuje debugowanie zapytan.
      *
      * @public
