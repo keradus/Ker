@@ -119,6 +119,25 @@ class DB
     }
 
     /**
+     * Metoda dodająca rekord.
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return int ID wprowadzonego rekordu
+     */
+    public function insert($_sql, $_params)
+    {
+        $this->showDebug("insert", $_sql, $_params);
+
+        $statement = $this->instance->prepare($_sql);
+        $statement->execute($_params);
+        $statement->closeCursor();
+
+        return $this->instance->lastInsertId();
+    }
+
+    /**
      * Metoda aktywuje lub deaktywuje debugowanie zapytan.
      *
      * @public
