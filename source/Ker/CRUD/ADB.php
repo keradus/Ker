@@ -62,6 +62,100 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda pomocnicza dla metody buildWhere budująca fragment sekcji zapytania WHERE w sposób niestandardowy lub dla nieistniejących pól.
+     * Domyślnie metoda jest pusta, w przypadku chęci wykorzystania możliwości tej metody należy ją przesłonić w klasie potomnej.
+     *
+     * @static
+     * @public
+     * @param string pole
+     * @param string|array wartość lub możliwe wartości pola
+     * @return string fragment zapytania sql stanowiący wartość sekcji WHERE
+     */
+    protected static function buildWhere_extraField($_field, $_value)
+    {
+        return NULL;
+    }
+
+    /**
+     * Metoda pomocnicza dla metody buildWhere budująca fragment sekcji zapytania WHERE dla istniejących pól.
+     * Gdy jako wartość podamy skalara to w zapytaniu otrzymamy proste przyrównanie wartości, gdy tablicę - sprawdzimy czy przekazane pole
+     * jest jedną z wartości.
+     *
+     * @static
+     * @public
+     * @param string pole
+     * @param string|array wartość lub możliwe wartości pola
+     * @return string fragment zapytania sql stanowiący wartość sekcji WHERE
+     */
+    protected static function buildWhere_standardField($_field, $_value)
+    {
+        if (!isset(static::$fields[$_field])) {
+            return NULL;
+        }
+
+        if (is_array($_value)) {
+            if (empty($_value)) {
+                return NULL;
+            }
+
+            return "`$_field` IN (" . implode(", ", array_map(function ($_) {
+                                        return "'$_'";
+                                    }, $_value)) . ")";
+        }
+
+        return "`$_field` = '$_value'";
+    }
+
+    /**
+     * Metoda składająca przekazane parametry w wartość sekcji WHERE zapytania SQL.
+     *
+     * W przypadku otrzymania napisu po prostu go zwraca.
+     * Jeśli otrzyma tablicę to przekształca ją w kwerende SQL. Przekształcenie pary klucz=>wartość na fragment SQL odbywa się w następującej
+     * kolejności:
+     * - buildWhere_extraField - obsługę nietypowych warunków lub pól,
+     * - buildWhere_standardField - domyślna obsługa istniejących pól.
+     *
+     * @static
+     * @public
+     * @param array $_ Tablica parametrów:\n
+     *  where => (string|array) [opt] surowy fragment zapytania SQL lub tablica mapująca nazwę pola na jego wartość lub tablicę wartości\n
+     *  whereGlue => (string) [opt] łącznik poszczególnych fragmentów wygenerowanych na bazie $_["where"] (gdy to tablica)
+     * @return string fragment zapytania sql stanowiący wartość sekcji WHERE
+     */
+    public static function buildWhere($_)
+    {
+        if (empty($_["where"])) {
+            return NULL;
+        }
+
+        $where = $_["where"];
+
+        if (is_string($where)) {
+            return $where;
+        }
+
+        $ret = array();
+
+        foreach ($where AS $k => $v) {
+            $tmp = static::buildWhere_extraField($k, $v);
+            if ($tmp !== NULL) {
+                $ret[] = $tmp;
+                continue;
+            }
+
+            $tmp = static::buildWhere_standardField($k, $v);
+            if ($tmp !== NULL) {
+                $ret[] = $tmp;
+                continue;
+            }
+
+            throw new \LogicException("Can't process sql-where param: $k => $v");
+        }
+
+        return implode(" " . (isset($_["whereGlue"]) ? $_["whereGlue"] : "AND") . " ", $ret);
+    }
+
+    /**
      * Metoda pobierająca pola.
      *
      * @public
