@@ -260,6 +260,41 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda pobierająca nazwy kolumn w tabeli.
+     *
+     * @public
+     * @param array|list|string $... nazwy kolumn do pobrania: pojedyńcza nazwa, lista lub tablica nazw
+     * @return mixed|array nazwa kolumny lub ich tablica
+     */
+    public static function getFields(/* list of arrays */)
+    {
+        $func_num_args = func_num_args();
+
+        if (!$func_num_args) {
+            throw new \BadMethodCallException("Parameter missing");
+        } elseif ($func_num_args === 1) {
+            $name = func_get_arg(0);
+            if (is_array($name)) {
+                $return = array();
+                foreach ($name AS $item) {
+                    $return[$item] = static::$fields[$item];
+                }
+
+                return $return;
+            }
+
+            return static::$fields[$name];
+        }
+
+        $return = array();
+        foreach (func_get_args() AS $item) {
+            $return[$item] = static::$fields[$item];
+        }
+
+        return $return;
+    }
+
+    /**
      * Metoda pobierająca pola.
      *
      * @public
