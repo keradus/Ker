@@ -295,6 +295,13 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Tablica zawierająca listę zmodyfikowanych pól.
+     *
+     * @protected
+     */
+    protected $modified;
+
+    /**
      * Metoda usuwająca rekord.
      *
      * @public
