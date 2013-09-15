@@ -99,6 +99,39 @@ class DB
     }
 
     /**
+     * Metoda dokonująca kasacji rekordów.
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return int ilość usuniętych rekordów
+     */
+    public function delete($_sql, $_params = array())
+    {
+        $this->showDebug("delete", $_sql, $_params);
+
+        $statement = $this->instance->prepare($_sql);
+        $statement->execute($_params);
+        $return = $statement->rowCount();
+        $statement->closeCursor();
+
+        return $return;
+    }
+
+    /**
+     * Metoda dokonująca kasacji pojedyńczego rekordu. Do przekazanego zapytania dodaje fragment " LIMIT 1".
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return int ilość usuniętych rekordów
+     */
+    public function deleteOne($_sql, $_params = array())
+    {
+        return self::delete("$_sql LIMIT 1", $_params);
+    }
+
+    /**
      * Metoda zabezpieczająca wartości przed wysłaniem ich jako część zapytania SQL. Wykorzystywana gdy wartości nie da się przesłać jako parametrów.
      *
      * @public
