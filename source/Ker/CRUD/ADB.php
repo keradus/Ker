@@ -184,6 +184,21 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda usuwająca rekord.
+     *
+     * @static
+     * @public
+     * @param mixed klucz główny tabeli
+     * @return int ilość usuniętych rekordów
+     */
+    public static function destroy($_ = NULL)
+    {
+        $sql = "DELETE FROM `" . static::$table . "` WHERE `" . static::$fields["PK"] . "` = :pk";
+
+        return static::getDbHandler()->delete($sql, array(":pk" => $_));
+    }
+
+    /**
      * Metoda zwracająca handler do bazy danych.
      *
      * @static
