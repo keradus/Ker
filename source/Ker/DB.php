@@ -138,6 +138,59 @@ class DB
     }
 
     /**
+     * Metoda pobierająca rekordy.
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return array tablica tablic asocjacyjnych z pobranymi rekordami
+     */
+    public function select($_sql, $_params = array())
+    {
+        $this->showDebug("select", $_sql, $_params);
+
+        $statement = $this->instance->prepare($_sql);
+        $statement->execute($_params);
+        $return = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+
+        return $return;
+    }
+
+    /**
+     * Metoda pobierająca pojedyńczy rekord. Do przekazanego zapytania dodaje fragment " LIMIT 1".
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return array|NULL tablica asocjacyjna z wartościami pobranego rekordu lub NULL w przypadku braku pasującego rekordu
+     */
+    public function selectOne($_sql, $_params = array())
+    {
+        $return = self::select("$_sql LIMIT 1", $_params);
+        if (empty($return)) {
+            return NULL;
+        }
+
+        return $return[0];
+    }
+
+    /**
+     * Metoda pobierająca pojedyńczą wartość. Do przekazanego zapytania dodaje fragment " LIMIT 1".
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return string|NULL pojedyńcza wartość pobranego rekordu lub NULL w przypadku braku pasującego rekordu
+     */
+    public function selectOneField($_sql, $_params = array())
+    {
+        $return = self::select("$_sql LIMIT 1", $_params);
+
+        return (isset($return[0]) && count($return[0]) ? array_pop($return[0]) : NULL);
+    }
+
+    /**
      * Metoda aktywuje lub deaktywuje debugowanie zapytan.
      *
      * @public
