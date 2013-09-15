@@ -13,4 +13,28 @@ namespace Ker\Utils;
 class Debug
 {
 
+    /**
+     * Metoda wyświetlająca ilość zaalokowanej pamięci.
+     *
+     * @static
+     * @public
+     * @param bool [opt = false] $_real czy uwzględnić również pamięc zaalokowaną nie przy użyciu emalloc
+     */
+    public static function memory($_real = false)
+    {
+        echo memory_get_usage($_real);
+    }
+
+    /**
+     * Metoda wyświetlająca szczytową ilość zaalokowanej pamięci.
+     *
+     * @static
+     * @public
+     * @param bool [opt = false] $_real czy uwzględnić również pamięc zaalokowaną nie przy użyciu emalloc
+     */
+    public static function memoryMax($_real = false)
+    {
+        echo memory_get_peak_usage($_real);
+    }
+
 }
