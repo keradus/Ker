@@ -184,6 +184,26 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda zwracająca handler do bazy danych.
+     *
+     * @static
+     * @public
+     * @return DB handler
+     * @see Ker\Config::getOne("SQL")
+     */
+
+    public static function getDbHandler()
+    {
+        static $handler = NULL;
+
+        if (!$handler) {
+            $handler = \Ker\Config::getOne("SQL");
+        }
+
+        return $handler;
+    }
+
+    /**
      * Metoda pobierająca pola.
      *
      * @public
