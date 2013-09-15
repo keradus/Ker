@@ -315,6 +315,39 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda zapisująca rekord.\n
+     * W przypadku zapisywania nowego rekordu aktualizowana jest informacja o PK (bez zmian w $modified).
+     *
+     * @public
+     * @return mixed identyfikator zapisanego obiektu
+     */
+    public function save($_ = NULL)
+    {
+        $sql = NULL;
+        $params = array();
+
+        $fields = $this->modified;
+        foreach ($fields AS $key => & $value) {
+            $value = "`" . static::$fields[$key] . "` = :$key";
+            $params[":$key"] = $this->getOne($key);
+        }
+
+        if ($this->hasOne("PK")) {
+            $params[":pk"] = $this->getOne("PK");
+            $sql = "UPDATE `" . static::$table . "` SET " . implode(", ", $fields) . " WHERE `" . static::$fields["PK"] . "` = :pk";
+            static::getDbHandler()->updateOne($sql, $params);
+
+            return $this->getOne("PK");
+        }
+
+        $sql = "INSERT INTO `" . static::$table . "` SET " . implode(", ", $fields);
+        $pk = static::getDbHandler()->insert($sql, $params);
+        $this->setOneSilently("PK", $pk);
+
+        return $pk;
+    }
+
+    /**
      * Metoda zapisująca pojedyńcze pole.
      *
      * @public
