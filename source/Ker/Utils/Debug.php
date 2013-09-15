@@ -14,6 +14,34 @@ class Debug
 {
 
     /**
+     * Metoda wyświetlająca dumpa przekazanych elementów używając do tego metody print_r, owijając każdy z nich tagiem <pre>.
+     *
+     * @static
+     * @public
+     * @param list $... elementy do zdumpowania
+     */
+    public static function prePrint(/* list */)
+    {
+        foreach (func_get_args() AS $data) {
+            echo "<pre style='border: blue solid 1px;'>", print_r($data, true), "</pre>";
+        }
+    }
+
+    /**
+     * Metoda wyświetlająca dumpa przekazanych elementów, owijając każdy z nich tagiem <pre>.
+     *
+     * @static
+     * @public
+     * @param list $... elementy do zdumpowania
+     */
+    public static function preDump(/* list */)
+    {
+        foreach (func_get_args() AS $data) {
+            echo "<pre style='border: blue solid 1px;'>", var_dump($data), "</pre>";
+        }
+    }
+
+    /**
      * Metoda wyświetlająca stos wywołań.
      *
      * @static
