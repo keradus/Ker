@@ -59,6 +59,30 @@ class DB
     protected $transactionLevel = 0;
 
     /**
+     * Konstruktor klasy. Nawiązuje połączenie z bazą danych, ustawia tryb zgłaszania błędów na rzucanie wyjątków oraz kodowanie połączenia na UTF-8.
+     *
+     * @public
+     * @param DBConfig $_config konfiguracja połączenia z bazą danych
+     */
+    public function __construct(\Ker\DBConfig $_config)
+    {
+        $this->instance = new \PDO($_config->dsn . ":host=" . $_config->host . ";dbname=" . $_config->database . ";port=" . $_config->port, $_config->user, $_config->password);
+        $this->instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $this->instance->query("SET NAMES UTF8");
+        $this->transactionNestable = in_array($_config->dsn, self::$savepointTransactions);
+    }
+
+    /**
+     * Destruktor klasy, zwalnia instancje PDO.
+     *
+     * @public
+     */
+    public function __destruct()
+    {
+        unset($this->instance);
+    }
+
+    /**
      * Metoda aktywuje lub deaktywuje debugowanie zapytan.
      *
      * @public
