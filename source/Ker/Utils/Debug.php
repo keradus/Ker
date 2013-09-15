@@ -83,6 +83,18 @@ class Debug
     }
 
     /**
+     * Metoda będąca shorthandem dla metody dmp, gdzie jako opcje sterujące przekazuje NULLa.
+     *
+     * @static
+     * @public
+     * @param list $... elementy do zdumpowania
+     */
+    public static function dump(/* list */)
+    {
+        return self::dmp(NULL, func_get_args());
+    }
+
+    /**
      * Metoda wyświetlająca dumpa przekazanych elementów używając do tego metody print_r, owijając każdy z nich tagiem <pre>.
      *
      * @static
