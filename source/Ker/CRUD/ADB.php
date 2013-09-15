@@ -36,4 +36,57 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
         "PK" => "id",
     );
 
+    /**
+     * Metoda pobierająca pola.
+     *
+     * @public
+     * @param array|list|string $... pola do pobrania: pojedyńcza nazwa, lista lub tablica nazw, jeśli nie podano żadnej - pobierze wszystkie
+     * @return mixed|array element lub tablica elementów
+     */
+    public function get()
+    {
+        if (!func_num_args()) {
+            return parent::get(array_keys(static::$fields));
+        }
+
+        if (func_num_args() === 1) {
+            return parent::get(func_get_arg(0));
+        }
+
+        return parent::get(func_get_args());
+    }
+
+    /**
+     * Metoda zapisująca pojedyńcze pole.
+     *
+     * @public
+     * @param string $_name nazwa pola do zapisania
+     * @param mixed $_value wartość pola
+     */
+    public function setOne($_name, $_value)
+    {
+        if (!isset(static::$fields[$_name])) {
+            throw new \InvalidArgumentException("Argument out of allowed fields ($_name)");
+        }
+
+        $this->container[$_name] = $_value;
+        $this->modified[$_name] = true;
+    }
+
+    /**
+     * Metoda zapisująca pojedyńcze pole _bez_ oznaczania pola jako zmodyfikowanego.
+     *
+     * @public
+     * @param string $_name nazwa pola do zapisania
+     * @param mixed $_value wartość pola
+     */
+    public function setOneSilently($_name, $_value)
+    {
+        if (!isset(static::$fields[$_name])) {
+            throw new \InvalidArgumentException("Argument out of allowed fields ($_name)");
+        }
+
+        $this->container[$_name] = $_value;
+    }
+
 }
