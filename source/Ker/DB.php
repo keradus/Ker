@@ -29,4 +29,20 @@ class DB
         "update" => false,
     );
 
+    /**
+     * Metoda aktywuje lub deaktywuje debugowanie zapytan.
+     *
+     * @public
+     * @param string $_type rodzaj zapytan, dla ktorego ustalamy debugowanie, musi byc zdefiniowany w $debug
+     * @param bool $_on czy debugowanie ma byc aktywne
+     */
+    public function setDebug($_type, $_on)
+    {
+        if (!isset($this->debug[$_type])) {
+            throw new \InvalidArgumentException();
+        }
+
+        $this->debug[$_type] = (bool) $_on;
+    }
+
 }
