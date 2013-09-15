@@ -302,6 +302,54 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     protected $modified;
 
     /**
+     * Konstruktor.
+     *
+     * @public
+     * @param $_ [opt = NULL] Brak parametru oznacza tworzenie nowego obiektu, parametr to skalar oznaczajacy ID inicjalizowanego obiektu lub tablica parametrów:\n
+     *  load_pk => [opt] ładuje obiekt o zadanym PK, jeśli nie podano parametru - tworzy nowy rekord\n
+     *  prepared => [opt] uzupełnia pola na podstawie otrzymanej tablicy, nie oznacza pól w $modified
+     * @return Ker\CRUD\ADB instancja klasy dziedziczącej
+     * @exception Ker\Ex\NoData - wyjątek rzucany w sytuacji, gdy zlecono załadowanie nieistniejącego obiektu
+     */
+    public function __construct($_ = NULL)
+    {
+        if (!$_) {
+            return;
+        }
+
+        $fields = array();
+
+        if (!is_array($_)) {
+            $_ = array("load_pk" => $_);
+        }
+
+        if (isset($_["load_pk"])) {
+            $queryFields = array_keys(static::$fields);
+            foreach ($queryFields AS & $field) {
+                $field = "`$field` AS '$field'";
+            }
+
+            $sql = static::transformSqlFields("SELECT " . implode(", ", $queryFields))
+                    . " FROM `" . static::$table . "` WHERE `" . static::$fields["PK"] . "` = :pk";
+            $fields = static::getDbHandler()->selectOne($sql, array(":pk" => $_["load_pk"]));
+
+            if (!$fields) {
+                throw new \Ker\Ex\NoData("Item not exists");
+            }
+        }
+
+        if (isset($_["prepared"]) AND is_array($_["prepared"])) {
+            $fields = array_merge($fields, $_["prepared"]);
+        }
+
+        if ($fields) {
+            foreach ($fields AS $key => $value) {
+                $this->setOneSilently($key, $value);
+            }
+        }
+    }
+
+    /**
      * Metoda usuwająca rekord.
      *
      * @public
