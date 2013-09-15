@@ -156,6 +156,34 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda budująca zapytanie do bazy.
+     *
+     * @static
+     * @protected
+     * @param array $_ Tablica parametrów:\n
+     *  fields => (array) [opt] nazwy pól, które chcemy pobrać, domyślnie brane wszystkie\n
+     *  where => (string|array) [opt] warunek WHERE dla zapytania (bez słowa kluczowego WHERE), decydujący o selekcji rekordów\n
+     *  whereGlue => (string) [opt] łącznik poszczególnych fragmentów wygenerowanych na bazie $_["where"] (gdy to tablica)\n
+     *  order => (string) [opt] fragment ORDER BY dla zapytania (bez słów kluczowych ORDER BY), decydujący o kolejności rekordów\n
+     *  limit => (limit) [opt] maksymalna ilość pobranych rekordów (bez słowa kluczowego LIMIT)
+     */
+    protected static function buildSelect($_)
+    {
+        $queryFields = (isset($_["fields"]) ? $_["fields"] : array_keys(static::$fields));
+        foreach ($queryFields AS & $field) {
+            $field = "`$field` AS '$field'";
+        }
+
+        return static::transformSqlFields("SELECT " . implode(", ", $queryFields))
+                . " FROM `" . static::$table . "`"
+                . static::transformSqlFields(
+                        (!empty($_["where"]) ? " WHERE " . static::buildWhere($_) : "")
+                        . (!empty($_["order"]) ? " ORDER BY {$_["order"]}" : "")
+                        . (!empty($_["limit"]) ? " LIMIT {$_["limit"]}" : "")
+        );
+    }
+
+    /**
      * Metoda pobierająca pola.
      *
      * @public
