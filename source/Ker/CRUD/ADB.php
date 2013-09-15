@@ -37,6 +37,31 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     );
 
     /**
+     * Metoda podmieniająca identyfikatory pól w systemie na odpowiadające im nazwy kolumn w bazie. Identyfikator pola rozpoznawany jest
+     * przez otoczenie go znakiem "`". Każdy identyfikator musi istnieć jako klucz w tablicy $fields.
+     *
+     * @static
+     * @protected
+     * @param string zapytanie sql lub jego fragment przed podmienieniem pól
+     * @return string zapytanie sql lub jego fragment po podmienieniu pól
+     */
+    protected static function transformSqlFields($_)
+    {
+        if ($_ === "") {
+            return $_;
+        }
+
+        $fields = static::$fields;
+        $subquery = preg_replace_callback(
+                '/`(.+?)`/', function ($_) use ($fields) {
+                    return '`' . $fields[$_[1]] . '`';
+                }, $_
+        );
+
+        return $subquery;
+    }
+
+    /**
      * Metoda pobierająca pola.
      *
      * @public
