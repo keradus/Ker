@@ -15,7 +15,7 @@ class Debug
 
     /**
      * Metoda wyświetlajaca lub zwracająca (zależnie od przekazanych parametrów) rozbudowanego dumpa z przekazanych parametrów.
-     * Dump jest przygotowywany tylko, gdy w \Ker\Config klucz "debug" jest ustawiona na wartosc true.
+     * Dump jest przygotowywany tylko, gdy w \Ker\Config klucz "debug" jest ustawiony na wartość true.
      *
      * @static
      * @public
