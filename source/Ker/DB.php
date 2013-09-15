@@ -15,6 +15,14 @@ class DB
 {
 
     /**
+     * Tablica z identyfikatorami sterowników baz danych obsługujących SAVEPOINTy.
+     *
+     * @static
+     * @protected
+     */
+    protected static $savepointTransactions = array("mysql", "pgsql",);
+
+    /**
      * Hash definiujacy wyświetlane informacje debugowe.
      * Klucze reprezentują odpowiadające im typy zapytań, specjalny klucz "all" wymusza wyświetlenie wszystkich debugów.
      *
@@ -28,6 +36,27 @@ class DB
         "select" => false,
         "update" => false,
     );
+
+    /**
+     * Instancja klasy PDO.
+     *
+     * @protected
+     */
+    protected $instance;
+
+    /**
+     * Flaga informująca o dostępności zagnieżdzonych transakcji dla połączenia.
+     *
+     * @protected
+     */
+    protected $transactionNestable;
+
+    /**
+     * Poziom zagnieżdzenia transakcji. Zero w przypadku braku otwartej transakcji.
+     *
+     * @protected
+     */
+    protected $transactionLevel = 0;
 
     /**
      * Metoda aktywuje lub deaktywuje debugowanie zapytan.
