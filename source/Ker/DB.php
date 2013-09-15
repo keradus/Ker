@@ -171,6 +171,17 @@ class DB
     }
 
     /**
+     * Metoda pobierająca informację czy zagnieżdżone transakcje są wspierane dla otwartego połączenia z bazą.
+     *
+     * @public
+     * @return bool informacja czy zagnieżdżone transakcje są wspierane
+     */
+    public function isNestableTransactionSupported()
+    {
+        return $this->transactionNestable;
+    }
+
+    /**
      * Metoda pobierająca rekordy.
      *
      * @public
@@ -264,6 +275,57 @@ class DB
         );
 
         \Ker\Utils\Debug::dmp(array("trace" => false, "memory" => false,), "SQL DEBUG TYPE: " . strtoupper($_type), $_sql, $_params, $sqlFull);
+    }
+
+    /**
+     * Metoda rozpoczynająca transakcję. Uwzglednia transakcje zagnieżdzone.
+     *
+     * @public
+     */
+    public function transactionBegin()
+    {
+        if (!$this->transactionNestable || $this->transactionLevel === 0) {
+            $this->instance->beginTransaction();
+        } else {
+            $this->instance->exec("SAVEPOINT LEVEL{$this->transactionLevel}");
+        }
+        ++$this->transactionLevel;
+    }
+
+    /**
+     * Metoda zatwierdzająca transakcję. Uwzglednia transakcje zagnieżdzone.
+     *
+     * @public
+     */
+    public function transactionCommit()
+    {
+        --$this->transactionLevel;
+
+        if (!$this->transactionNestable || $this->transactionLevel === 0) {
+            $this->instance->commit();
+
+            return;
+        }
+
+        $this->instance->exec("RELEASE SAVEPOINT LEVEL{$this->transactionLevel}");
+    }
+
+    /**
+     * Metoda odrzucająca transakcję. Uwzglednia transakcje zagnieżdzone.
+     *
+     * @public
+     */
+    public function transactionRollBack()
+    {
+        --$this->transactionLevel;
+
+        if (!$this->transactionNestable || $this->transactionLevel === 0) {
+            $this->instance->rollBack();
+
+            return;
+        }
+
+        $this->instance->exec("ROLLBACK TO SAVEPOINT LEVEL{$this->transactionLevel}");
     }
 
     /**
