@@ -199,6 +199,35 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda wytwórcza zwracająca tablicę obiektów klasy.
+     *
+     * @static
+     * @public
+     * @param $_ [opt = NULL] Tablica parametrów:\n
+     *  fields => [opt] nazwy pól, które chcemy pobrać, domyślnie wszystkie pola generowane na podstawie static::$fields\n
+     *  where => [opt] warunek WHERE dla zapytania (bez słowa kluczowego WHERE), decydujący o selekcji rekordów\n
+     *  order => [opt] fragment ORDER BY dla zapytania (bez słów kluczowych ORDER BY), decydujący o kolejności rekordów\n
+     *  limit => [opt] maksymalna ilość pobranych rekordów (bez słowa kluczowego LIMIT)
+     *  countOnly => [opt] na wyjściu zamiast instancji obiektów otrzymamy ilość pasujących rekordów
+     * @return array tablica utworzonych obiektów lub ich ilosc jesli ustawiono parametr countOnly
+     */
+    public static function factory($_ = NULL)
+    {
+        $query = static::buildSelect($_);
+        $items = static::getDbHandler()->select($query);
+
+        if (!empty($_["countOnly"])) {
+            return count($items);
+        }
+
+        $calledClass = get_called_class();
+
+        return array_map(function (& $item) use ($calledClass) {
+                    return new $calledClass(array("prepared" => $item));
+                }, $items);
+    }
+
+    /**
      * Metoda zwracająca handler do bazy danych.
      *
      * @static
