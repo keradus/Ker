@@ -10,7 +10,7 @@ namespace Ker\CRUD;
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @license MIT
  * @link https://github.com/keradus/Ker
- * @date 2013-09-15 20:08:43
+ * @date 2013-09-15 20:56:10
  * @abstract
  */
 abstract class ADB extends \Ker\AProperty implements ICRUD
