@@ -266,4 +266,37 @@ class DB
         \Ker\Utils\Debug::dmp(array("trace" => false, "memory" => false,), "SQL DEBUG TYPE: " . strtoupper($_type), $_sql, $_params, $sqlFull);
     }
 
+    /**
+     * Metoda dokonująca aktualizacji rekordów.
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return int ilość zmodyfikowanych rekordów
+     */
+    public function update($_sql, $_params)
+    {
+        $this->showDebug("update", $_sql, $_params);
+
+        $statement = $this->instance->prepare($_sql);
+        $statement->execute($_params);
+        $return = $statement->rowCount();
+        $statement->closeCursor();
+
+        return $return;
+    }
+
+    /**
+     * Metoda dokonująca aktualizacji pojedyńczego rekordu. Do przekazanego zapytania dodaje fragment " LIMIT 1".
+     *
+     * @public
+     * @param string $_sql zapytanie SQL do wykonania
+     * @param array [opt = array ( )] $_value parametry dla zapytania SQL
+     * @return int ilość zmodyfikowanych rekordów
+     */
+    public function updateOne($_sql, $_params)
+    {
+        return self::update("$_sql LIMIT 1", $_params);
+    }
+
 }
