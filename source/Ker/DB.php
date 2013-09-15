@@ -9,7 +9,7 @@ namespace Ker;
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @license MIT
  * @link https://github.com/keradus/Ker
- * @date 2013-09-15 21:26:43
+ * @date 2013-09-15 21:49:15
  */
 class DB
 {
