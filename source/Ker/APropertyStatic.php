@@ -36,7 +36,7 @@ abstract class APropertyStatic
         $func_num_args = func_num_args();
 
         if (!$func_num_args) {
-            throw new \Ker\Ex\NoParameter ();
+            throw new \BadMethodCallException("Parameter missing");
         } elseif ($func_num_args === 1) {
             $name = func_get_arg(0);
             if (is_array($name)) {
@@ -92,14 +92,14 @@ abstract class APropertyStatic
      * @static
      * @public
      * @param array|list|string $... elementy do usunięcia: pojedyńcza nazwa, lista lub tablica nazw
-     * @exception \Ker\Ex\NoParameter - wyjątek wyrzucany w sytuacji, gdy nie przekazano parametrów do funkcji
+     * @exception \BadMethodCallException - wyjątek wyrzucany w sytuacji, gdy nie przekazano parametrów do funkcji
      */
     public static function remove()
     {
         $func_num_args = func_num_args();
 
         if (!$func_num_args) {
-            throw new \Ker\Ex\NoParameter ();
+            throw new \BadMethodCallException("Parameter missing");
         } elseif ($func_num_args === 1) {
             $name = func_get_arg(0);
             if (is_array($name)) {
@@ -142,7 +142,7 @@ abstract class APropertyStatic
         $func_num_args = func_num_args();
 
         if (!$func_num_args) {
-            throw new \Ker\Ex\NoParameter ();
+            throw new \BadMethodCallException("Parameter missing");
         } elseif ($func_num_args === 1) {
             $arr = func_get_arg(0);
             if (!is_array($arr)) {
