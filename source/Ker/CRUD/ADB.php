@@ -295,6 +295,23 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda usuwająca rekord.
+     *
+     * @public
+     * @return int ilość usuniętych rekordów, uwaga - jeśli zlecimy usunięcie nowego, niezapisanego rekordu - otrzymamy 0, które nie będzie jednak błędem
+     */
+    public function delete($_ = NULL)
+    {
+        if (!$this->hasOne("PK")) {
+            return 0;
+        }
+
+        $sql = "DELETE FROM `" . static::$table . "` WHERE `" . static::$fields["PK"] . "` = :pk";
+
+        return static::getDbHandler()->deleteOne($sql, array(":pk" => $this->getOne("PK")));
+    }
+
+    /**
      * Metoda pobierająca pola.
      *
      * @public
