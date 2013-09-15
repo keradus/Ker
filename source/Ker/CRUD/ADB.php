@@ -248,6 +248,18 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda pobierająca nazwę tabeli.
+     *
+     * @static
+     * @public
+     * @return string nazwa tabeli
+     */
+    public static function getTable()
+    {
+        return static::$table;
+    }
+
+    /**
      * Metoda pobierająca pola.
      *
      * @public
