@@ -14,6 +14,19 @@ class Debug
 {
 
     /**
+     * Metoda wyświetlająca stos wywołań.
+     *
+     * @static
+     * @public
+     */
+    public static function trace()
+    {
+        echo "<pre>";
+        debug_print_backtrace();
+        echo "</pre>";
+    }
+
+    /**
      * Metoda wyświetlająca ilość zaalokowanej pamięci.
      *
      * @static
