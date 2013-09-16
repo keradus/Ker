@@ -199,6 +199,19 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda usuwająca wszystkie rekordy używając do tego komendy TRUNCATE.
+     *
+     * @static
+     * @public
+     */
+    public static function destroyAll()
+    {
+        $sql = "TRUNCATE TABLE `" . static::$table . "`";
+
+        static::getDbHandler()->call($sql);
+    }
+
+    /**
      * Metoda wytwórcza zwracająca tablicę obiektów klasy.
      *
      * @static
