@@ -204,7 +204,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      * @static
      * @public
      */
-    public static function destroyAll()
+    public static function truncate()
     {
         $sql = "TRUNCATE TABLE `" . static::$table . "`";
 
