@@ -212,6 +212,19 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Metoda usuwająca wszystkie rekordy.
+     *
+     * @static
+     * @public
+     */
+    public static function destroyAll()
+    {
+        $sql = "DELETE FROM `" . static::$table . "`";
+
+        static::getDbHandler()->delete($sql);
+    }
+
+    /**
      * Metoda wytwórcza zwracająca tablicę obiektów klasy.
      *
      * @static
