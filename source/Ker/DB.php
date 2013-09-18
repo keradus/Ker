@@ -34,6 +34,7 @@ class DB
         "delete" => false,
         "insert" => false,
         "select" => false,
+        "transaction" => false,
         "update" => false,
     );
 
@@ -284,9 +285,12 @@ class DB
      */
     public function transactionBegin()
     {
+
         if (!$this->transactionNestable || $this->transactionLevel === 0) {
+            $this->showDebug("transaction", "BEGIN");
             $this->instance->beginTransaction();
         } else {
+            $this->showDebug("transaction", "SAVEPOINT LEVEL{$this->transactionLevel}");
             $this->instance->exec("SAVEPOINT LEVEL{$this->transactionLevel}");
         }
         ++$this->transactionLevel;
@@ -302,11 +306,13 @@ class DB
         --$this->transactionLevel;
 
         if (!$this->transactionNestable || $this->transactionLevel === 0) {
+            $this->showDebug("transaction", "COMMIT");
             $this->instance->commit();
 
             return;
         }
 
+        $this->showDebug("transaction", "RELEASE SAVEPOINT LEVEL{$this->transactionLevel}");
         $this->instance->exec("RELEASE SAVEPOINT LEVEL{$this->transactionLevel}");
     }
 
@@ -320,11 +326,13 @@ class DB
         --$this->transactionLevel;
 
         if (!$this->transactionNestable || $this->transactionLevel === 0) {
+            $this->showDebug("transaction", "ROLLBACK");
             $this->instance->rollBack();
 
             return;
         }
 
+        $this->showDebug("transaction", "ROLLBACK TO SAVEPOINT LEVEL{$this->transactionLevel}");
         $this->instance->exec("ROLLBACK TO SAVEPOINT LEVEL{$this->transactionLevel}");
     }
 
