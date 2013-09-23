@@ -66,9 +66,9 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      * Domyślnie metoda jest pusta, w przypadku chęci wykorzystania możliwości tej metody należy ją przesłonić w klasie potomnej.
      *
      * @static
-     * @public
+     * @protected
      * @param string pole
-     * @param string|array wartość lub możliwe wartości pola
+     * @param int|string|array wartość lub możliwe wartości pola
      * @return string fragment zapytania sql stanowiący wartość sekcji WHERE
      */
     protected static function buildWhere_extraField($_field, $_value)
@@ -82,9 +82,9 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      * jest jedną z wartości.
      *
      * @static
-     * @public
+     * @protected
      * @param string pole
-     * @param string|array wartość lub możliwe wartości pola
+     * @param int|string|array wartość lub możliwe wartości pola
      * @return string fragment zapytania sql stanowiący wartość sekcji WHERE
      */
     protected static function buildWhere_standardField($_field, $_value)
