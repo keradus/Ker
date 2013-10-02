@@ -332,7 +332,8 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      *
      * @public
      * @param $_ [opt = NULL] Brak parametru oznacza tworzenie nowego obiektu, parametr to skalar oznaczajacy ID inicjalizowanego obiektu lub tablica parametrów:\n
-     *  load_pk => [opt] ładuje obiekt o zadanym PK, jeśli nie podano parametru - tworzy nowy rekord\n
+     *  loadPk => [opt] ładuje obiekt o zadanym PK, jeśli nie podano parametru - tworzy nowy rekord\n
+     *  load_pk => [opt] alias dla loadPk\n
      *  prepared => [opt] uzupełnia pola na podstawie otrzymanej tablicy, nie oznacza pól w $modified
      * @return Ker\CRUD\ADB instancja klasy dziedziczącej
      * @exception Ker\Ex\NoData - wyjątek rzucany w sytuacji, gdy zlecono załadowanie nieistniejącego obiektu
@@ -346,10 +347,18 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
         $fields = array();
 
         if (!is_array($_)) {
-            $_ = array("load_pk" => $_);
+            $_ = array("loadPk" => $_);
         }
 
-        if (isset($_["load_pk"])) {
+        $pk = (isset($_["loadPk"])
+            ? $_["loadPk"]
+            : (isset($_["load_pk"])
+                ? $_["load_pk"]
+                : null
+            )
+        );
+
+        if ($pk) {
             $queryFields = array_keys(static::$fields);
             foreach ($queryFields AS & $field) {
                 $field = "`$field` AS '$field'";
@@ -357,7 +366,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
 
             $sql = static::transformSqlFields("SELECT " . implode(", ", $queryFields))
                     . " FROM `" . static::$table . "` WHERE `" . static::$fields["PK"] . "` = :pk";
-            $fields = static::getDbHandler()->selectOne($sql, array(":pk" => $_["load_pk"]));
+            $fields = static::getDbHandler()->selectOne($sql, array(":pk" => $pk));
 
             if (!$fields) {
                 throw new \Ker\Ex\NoData("Item not exists");
