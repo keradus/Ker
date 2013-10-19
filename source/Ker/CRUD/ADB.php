@@ -444,12 +444,16 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
             $sql = "UPDATE `" . static::$table . "` SET " . implode(", ", $fields) . " WHERE `" . static::$fields["PK"] . "` = :pk";
             static::getDbHandler()->updateOne($sql, $params);
 
+            $this->modified = [];
+
             return $this->getOne("PK");
         }
 
         $sql = "INSERT INTO `" . static::$table . "` SET " . implode(", ", $fields);
         $pk = static::getDbHandler()->insert($sql, $params);
         $this->setOneSilently("PK", $pk);
+
+        $this->modified = [];
 
         return $pk;
     }
