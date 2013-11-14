@@ -69,8 +69,7 @@ abstract class AVars extends APropertyStatic
 
     /**
      * Metoda pobierająca elementy przy jednoczesnym ich html-encodowaniu.
-     * Robi dokładnie to co metoda get, jednak została dla kompatybilności wstecznej. Nie należy więc używać tej metody - została jedynie dla
-     * kompatybilności wstecznej i z kolejnymi wersjami zostanie usunięta.
+     * Jest to przestarzała metoda będąca jedynie aliasem dla metody get.
      *
      * @static
      * @public
