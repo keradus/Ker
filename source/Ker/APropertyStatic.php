@@ -186,4 +186,16 @@ abstract class APropertyStatic
         static::$container[$_name] = $_value;
     }
 
+    /**
+     * Metoda konwertujaca obiekt do tablicy, zwracając wszystkie elementy kontenera.
+     *
+     * @static
+     * @public
+     * @return array tablica elementów
+     */
+    public function toArray()
+    {
+        return static::get(array_keys(static::$container));
+    }
+
 }

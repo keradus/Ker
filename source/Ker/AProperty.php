@@ -178,4 +178,14 @@ abstract class AProperty
         $this->container[$_name] = $_value;
     }
 
+    /**
+     * Metoda konwertujaca obiekt do tablicy, zwracając wszystkie elementy kontenera.
+     *
+     * @public
+     * @return array tablica elementów
+     */
+    public function toArray()
+    {
+        return $this->get(array_keys($this->container));
+    }
 }
