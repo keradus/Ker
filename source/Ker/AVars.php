@@ -57,11 +57,12 @@ abstract class AVars extends APropertyStatic
      * @static
      * @public
      * @param string $_name nazwa elementu do pobrania, jeśli element nie istnieje zwracany jest pusty string
+     * @param mixed $_value wartość zwracana w przypadku braku elementu w zasobie, domyślnie [NULL]
      * @return mixed element
      */
-    public static function getOneRaw($_name)
+    public static function getOneRaw($_name, $_value = NULL)
     {
-        $ret = parent::getOne($_name);
+        $ret = parent::getOne($_name, $_value);
 
         return $ret ? $ret : "";
     }
