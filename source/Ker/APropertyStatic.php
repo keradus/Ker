@@ -193,7 +193,7 @@ abstract class APropertyStatic
      * @public
      * @return array tablica elementów
      */
-    public function toArray()
+    public static function toArray()
     {
         return static::get(array_keys(static::$container));
     }
