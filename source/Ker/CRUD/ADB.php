@@ -249,7 +249,9 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
         $calledClass = get_called_class();
 
         return array_map(function (& $item) use ($calledClass) {
-                    return new $calledClass(array("prepared" => $item));
+                    $obj = new $calledClass(array("prepared" => $item));
+                    $obj->isNew = false;
+                    return $obj;
                 }, $items);
     }
 
@@ -321,6 +323,13 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     }
 
     /**
+     * Flaga oznaczająca czy rekord jest nowy.
+     *
+     * @protected
+     */
+    public $isNew;
+
+    /**
      * Tablica zawierająca listę zmodyfikowanych pól.
      *
      * @protected
@@ -340,6 +349,8 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      */
     public function __construct($_ = NULL)
     {
+        $this->isNew = true;
+
         if (!$_) {
             return;
         }
@@ -359,6 +370,8 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
         );
 
         if ($pk) {
+            $this->isNew = false;
+
             $queryFields = array_keys(static::$fields);
             foreach ($queryFields AS & $field) {
                 $field = "`$field` AS '$field'";
@@ -392,7 +405,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      */
     public function delete($_ = NULL)
     {
-        if (!$this->hasOne("PK")) {
+        if ($this->isNew || !$this->hasOne("PK")) {
             return 0;
         }
 
@@ -439,23 +452,24 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
             $params[":$key"] = $this->getOne($key);
         }
 
-        if ($this->hasOne("PK")) {
-            $params[":pk"] = $this->getOne("PK");
-            $sql = "UPDATE `" . static::$table . "` SET " . implode(", ", $fields) . " WHERE `" . static::$fields["PK"] . "` = :pk";
-            static::getDbHandler()->updateOne($sql, $params);
+        if ($this->isNew) {
+            $sql = "INSERT INTO `" . static::$table . "` SET " . implode(", ", $fields);
+            $pk = static::getDbHandler()->insert($sql, $params);
+            $this->setOneSilently("PK", $pk);
+            $this->isNew = false;
 
             $this->modified = [];
 
-            return $this->getOne("PK");
+            return $pk;
         }
 
-        $sql = "INSERT INTO `" . static::$table . "` SET " . implode(", ", $fields);
-        $pk = static::getDbHandler()->insert($sql, $params);
-        $this->setOneSilently("PK", $pk);
+        $params[":pk"] = $this->getOne("PK");
+        $sql = "UPDATE `" . static::$table . "` SET " . implode(", ", $fields) . " WHERE `" . static::$fields["PK"] . "` = :pk";
+        static::getDbHandler()->updateOne($sql, $params);
 
         $this->modified = [];
 
-        return $pk;
+        return $this->getOne("PK");
     }
 
     /**
