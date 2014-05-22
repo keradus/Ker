@@ -1,6 +1,6 @@
 <?php
 
-namespace Ker\Converter;
+namespace Ker;
 
 /**
  * Statyczna klasa abstrakcyjna dostarczająca podstawową funkcjonalność konwertera danych.
@@ -11,7 +11,7 @@ namespace Ker\Converter;
  * @static
  * @abstract
  */
-abstract class AConverter
+abstract class Converter
 {
     /**
      * Kontener na cache kodowanych danych.

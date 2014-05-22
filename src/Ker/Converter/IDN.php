@@ -11,7 +11,7 @@ namespace Ker\Converter;
  * @static
  * @abstract
  */
-class IDN extends AConverter
+class IDN extends \Ker\Converter
 {
     /**
      * Kontener na cache kodowanych danych.

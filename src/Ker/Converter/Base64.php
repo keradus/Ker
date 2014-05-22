@@ -11,7 +11,7 @@ namespace Ker\Converter;
  * @static
  * @abstract
  */
-class Base64 extends AConverter
+class Base64 extends \Ker\Converter
 {
     /**
      * Kontener na cache kodowanych danych.
