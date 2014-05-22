@@ -1,6 +1,6 @@
 <?php
 
-namespace Ker\CRUD;
+namespace Ker;
 
 /**
  * Klasa abstrakcyjna realizująca interfejs CRUD.\n
@@ -13,7 +13,7 @@ namespace Ker\CRUD;
  * @date 2013-09-15 20:56:10
  * @abstract
  */
-abstract class ADB extends \Ker\AProperty
+abstract class CRUD extends \Ker\AProperty
 {
 
     /**
@@ -344,7 +344,7 @@ abstract class ADB extends \Ker\AProperty
      *  loadPk => [opt] ładuje obiekt o zadanym PK, jeśli nie podano parametru - tworzy nowy rekord\n
      *  load_pk => [opt] alias dla loadPk\n
      *  prepared => [opt] uzupełnia pola na podstawie otrzymanej tablicy, nie oznacza pól w $modified
-     * @return Ker\CRUD\ADB instancja klasy dziedziczącej
+     * @return Ker\CRUD instancja klasy dziedziczącej
      * @exception Ker\Ex\NoData - wyjątek rzucany w sytuacji, gdy zlecono załadowanie nieistniejącego obiektu
      */
     public function __construct($_ = NULL)
