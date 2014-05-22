@@ -13,7 +13,7 @@ namespace Ker\CRUD;
  * @date 2013-09-15 20:56:10
  * @abstract
  */
-abstract class ADB extends \Ker\AProperty implements ICRUD
+abstract class ADB extends \Ker\AProperty
 {
 
     /**
