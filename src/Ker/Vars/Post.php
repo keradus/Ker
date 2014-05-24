@@ -10,7 +10,7 @@ namespace Ker\Vars;
  * @link https://github.com/keradus/Ker
  * @date 2013-11-13 12:03:00
  */
-class Post extends \Ker\AVars
+class Post extends \Ker\Vars
 {
 
     protected static $container;

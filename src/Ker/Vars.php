@@ -12,7 +12,7 @@ namespace Ker;
  * @date 2013-11-13 12:03:00
  * @abstract
  */
-abstract class AVars extends APropertyStatic
+abstract class Vars extends PropertyStatic
 {
 
     /**
