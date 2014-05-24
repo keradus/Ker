@@ -52,7 +52,7 @@ class Debug
 
         if (!isset($_opts["trace"]) || $_opts["trace"]) {
             echo "<hr />";
-            static::trace();
+            static::preTrace();
         }
 
         if (!isset($_opts["memory"]) || $_opts["memory"]) {
@@ -128,7 +128,7 @@ class Debug
      * @static
      * @public
      */
-    public static function trace()
+    public static function preTrace()
     {
         echo "<pre>";
         debug_print_backtrace();
