@@ -10,9 +10,9 @@ namespace Ker;
  * @link https://github.com/keradus/Ker
  * @date 2013-08-19 22:56:44
  * @abstract
- * @warning Wszelkie zmiany implementować również w bliźniaczej klasie APropertyStatic.
+ * @warning Wszelkie zmiany implementować również w bliźniaczej klasie PropertyStatic.
  */
-abstract class AProperty
+abstract class Property
 {
 
     /**

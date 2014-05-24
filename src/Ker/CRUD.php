@@ -13,7 +13,7 @@ namespace Ker;
  * @date 2013-09-15 20:56:10
  * @abstract
  */
-abstract class CRUD extends \Ker\AProperty
+abstract class CRUD extends \Ker\Property
 {
 
     /**
