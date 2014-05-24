@@ -57,15 +57,9 @@ class Debug
 
         if (!isset($_opts["memory"]) || $_opts["memory"]) {
             echo "<hr />";
-            echo "Memory: ";
-            static::memory();
-            echo " / ";
-            static::memory(true);
+            echo "Memory: " . static::memory() . " / " . static::memory(true);
             echo "<hr />";
-            echo "MemoryMax: ";
-            static::memoryMax();
-            echo " / ";
-            static::memoryMax(true);
+            echo "MemoryMax: " . static::memoryMax() . " / " . static::memoryMax(true);
         }
 
         echo "</div>";
@@ -141,10 +135,11 @@ class Debug
      * @static
      * @public
      * @param bool [opt = false] $_real czy uwzględnić również pamięc zaalokowaną nie przy użyciu emalloc
+     * @return int ilość zaalokowanej pamięci
      */
     public static function memory($_real = false)
     {
-        echo memory_get_usage($_real);
+        return memory_get_usage($_real);
     }
 
     /**
@@ -153,10 +148,11 @@ class Debug
      * @static
      * @public
      * @param bool [opt = false] $_real czy uwzględnić również pamięc zaalokowaną nie przy użyciu emalloc
+     * @return int szczytowa ilość zaalokowanej pamięci
      */
     public static function memoryMax($_real = false)
     {
-        echo memory_get_peak_usage($_real);
+        return memory_get_peak_usage($_real);
     }
 
 }
