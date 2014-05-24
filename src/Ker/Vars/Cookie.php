@@ -1,20 +1,20 @@
 <?php
 
-namespace Ker;
+namespace Ker\Vars;
 
 /**
- * Klasa implementująca wzorzec projektowy `Property`. Służy do zarządzania zmiennymi otrzymanymi metodą POST.
+ * Klasa implementująca wzorzec projektowy `Property`. Służy do zarządzania zmiennymi otrzymanymi z ciasteczek.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @license MIT
  * @link https://github.com/keradus/Ker
  * @date 2013-11-13 12:03:00
  */
-class VarsPost extends AVars
+class Cookie extends \Ker\AVars
 {
 
     protected static $container;
 
 }
 
-VarsPost::setContainer($_POST);
+Cookie::setContainer($_COOKIE);
