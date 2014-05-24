@@ -10,7 +10,7 @@ namespace Ker\Ex;
  * @link https://github.com/keradus/Ker
  * @date 2013-09-15 20:25:13
  */
-class NoData extends \LogicException
+class NoDataException extends \LogicException
 {
 
 }

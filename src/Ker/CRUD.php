@@ -382,7 +382,7 @@ abstract class CRUD extends \Ker\Property
             $fields = static::getDbHandler()->selectOne($sql, array(":pk" => $pk));
 
             if (!$fields) {
-                throw new \Ker\Ex\NoData("Item not exists");
+                throw new \Ker\CRUD\NoDataException("Item not exists");
             }
         }
 
