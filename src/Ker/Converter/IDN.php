@@ -9,7 +9,6 @@ namespace Ker\Converter;
  * @license MIT
  * @link https://github.com/keradus/Ker
  * @static
- * @abstract
  */
 class IDN extends \Ker\Converter
 {
