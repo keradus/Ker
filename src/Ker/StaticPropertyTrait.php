@@ -3,14 +3,14 @@
 namespace Ker;
 
 /**
- * Klasa implementująca wzorzec projektowy Property w wersji statycznej.
+ * Cecha implementująca wzorzec projektowy Property w wersji statycznej.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @license MIT
  * @link https://github.com/keradus/Ker
  * @date 2013-08-19 22:56:44
  * @abstract
- * @warning Wszelkie zmiany implementować również w bliźniaczej klasie Property.
+ * @warning Wszelkie zmiany implementować również w bliźniaczej czesze PropertyTrait.
  */
 trait StaticPropertyTrait
 {

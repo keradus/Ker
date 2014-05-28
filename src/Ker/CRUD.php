@@ -13,8 +13,9 @@ namespace Ker;
  * @date 2013-09-15 20:56:10
  * @abstract
  */
-abstract class CRUD extends \Ker\Property
+abstract class CRUD
 {
+    use \Ker\PropertyTrait;
 
     /**
      * Nazwa tabeli w bazie danych.
