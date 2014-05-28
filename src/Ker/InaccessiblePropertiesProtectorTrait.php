@@ -5,7 +5,7 @@ namespace Ker;
 /**
  * Inaccessible properties protector.
  *
- * Trait protects accessing unknown properties, helping keep code clean and safe.
+ * Trait, that protects accessing inaccessible (unknown) properties and helps keeping code clean and safe.
  *
  * @example
  *  class Foo
