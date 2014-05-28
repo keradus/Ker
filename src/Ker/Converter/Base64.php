@@ -31,19 +31,6 @@ class Base64 extends \Ker\Converter
     protected static $decodeCache = [];
 
     /**
-     * Metoda wyliczająca skrót danych. Metoda służy do określenia klucza cache'owania.
-     *
-     * @static
-     * @public
-     * @param string tekst
-     * @return string skrót tekstu
-     */
-    protected static function computeHash($_data)
-    {
-        return sha1($_data);
-    }
-
-    /**
      * Metoda dekodująca.
      *
      * @static

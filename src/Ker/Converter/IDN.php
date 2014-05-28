@@ -31,6 +31,19 @@ class IDN extends \Ker\Converter
     protected static $decodeCache = [];
 
     /**
+     * Metoda wyliczająca skrót danych. Metoda służy do określenia klucza cache'owania.
+     *
+     * @static
+     * @public
+     * @param string tekst
+     * @return string skrót tekstu
+     */
+    protected static function computeHash($_data)
+    {
+        return $_data;
+    }
+
+    /**
      * Metoda dekodująca.
      *
      * @static
