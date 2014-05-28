@@ -12,7 +12,7 @@ namespace Ker;
  * @abstract
  * @warning Wszelkie zmiany implementować również w bliźniaczej klasie Property.
  */
-abstract class PropertyStatic
+trait StaticPropertyTrait
 {
 
     /**

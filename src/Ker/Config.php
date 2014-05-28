@@ -11,15 +11,7 @@ namespace Ker;
  * @link https://github.com/keradus/Ker
  * @date 2013-09-15 19:54:25
  */
-class Config extends PropertyStatic
+class Config
 {
-
-    /**
-     * Kontener na dane.
-     *
-     * @static
-     * @protected
-     */
-    protected static $container = array();
-
+    use \Ker\StaticPropertyTrait;
 }
