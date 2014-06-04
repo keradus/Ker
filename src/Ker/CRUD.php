@@ -250,11 +250,11 @@ abstract class CRUD
         $calledClass = get_called_class();
 
         return array_map(function (& $item) use ($calledClass) {
-                    $obj = new $calledClass(array("prepared" => $item));
-                    $obj->isNew = false;
+            $obj = new $calledClass(array("prepared" => $item));
+            $obj->isNew = false;
 
-                    return $obj;
-                }, $items);
+            return $obj;
+        }, $items);
     }
 
     /**
