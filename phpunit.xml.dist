@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false" colors="true" bootstrap="./test/bootstrap.php">
+<phpunit
+    bootstrap="./test/bootstrap.php"
+    colors="true"
+    strict="true"
+    verbose="true"
+>
     <testsuite name="Ker">
         <directory suffix=".php">./test/Ker/Test</directory>
     </testsuite>
