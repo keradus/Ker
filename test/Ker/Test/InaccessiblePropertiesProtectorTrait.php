@@ -1,15 +1,23 @@
 <?php
+
 namespace Ker\Test;
 
-class InaccessiblePropertiesProtectorTraitTest extends \PHPUnit_Framework_TestCase
+class InaccessiblePropertiesProtectorTrait extends \Ker\PHPUnit\TestCase
 {
+    protected $fixture;
+
+    public function setUp()
+    {
+        $name = $this->getFixtureName();
+        $this->fixture = new $name();
+    }
+
     /**
      * @expectedException LogicException
      */
     public function testGetInaccessiblePropertyWithTrait()
     {
-        $testClass = new TestClass();
-        $bar = $testClass->bar;
+        $bar = $this->fixture->bar;
     }
 
     /**
@@ -17,8 +25,7 @@ class InaccessiblePropertiesProtectorTraitTest extends \PHPUnit_Framework_TestCa
      */
     public function testSetInaccessiblePropertyWithTrait()
     {
-        $testClass = new TestClass();
-        $testClass->bar = 1;
+        $this->fixture->bar = 1;
     }
 
     /**
@@ -26,14 +33,6 @@ class InaccessiblePropertiesProtectorTraitTest extends \PHPUnit_Framework_TestCa
      */
     public function testIssetInaccessiblePropertyWithTrait()
     {
-        $testClass = new TestClass();
-        $isset = isset($testClass->bar);
+        $isset = isset($this->fixture->bar);
     }
-}
-
-class TestClass
-{
-    use \Ker\InaccessiblePropertiesProtectorTrait;
-
-    public $foo;
 }
