@@ -1,4 +1,5 @@
+composer.lock
+phpunit.xml
 /nbproject/
 /test/report
-composer.lock
-vendor
+/vendor
