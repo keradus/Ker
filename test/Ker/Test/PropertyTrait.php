@@ -88,6 +88,13 @@ class PropertyTrait extends \Ker\PHPUnit\TestCase
         $this->assertSame(false, $this->fixture->hasOne("aaaaaaaaaa"));
     }
 
+    public function testRemoveAll()
+    {
+        $this->fixture->removeAll();
+
+        $this->assertEmpty($this->fixture->toArray());
+    }
+
     public function testRemoveByArray()
     {
         $this->fixture->remove(["a", "b", ]);
