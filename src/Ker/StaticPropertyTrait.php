@@ -96,23 +96,20 @@ trait StaticPropertyTrait
      */
     public static function remove()
     {
-        $func_num_args = func_num_args();
+        $argsCount = func_num_args();
 
-        if (!$func_num_args) {
+        if (!$argsCount) {
             throw new \BadMethodCallException("Parameter missing");
-        } elseif ($func_num_args === 1) {
-            $name = func_get_arg(0);
-            if (is_array($name)) {
-                foreach ($name AS $item) {
-                    static::removeOne($item);
-                }
-            } else {
-                static::removeOne($name);
-            }
-        } else {
-            foreach (func_get_args() AS $name) {
-                static::removeOne($name);
-            }
+        }
+
+        $names = (($argsCount > 1) ? func_get_args() : func_get_arg(0));
+
+        if (!is_array($names)) {
+            $names = [$names, ];
+        }
+
+        foreach ($names AS $item) {
+            static::removeOne($item);
         }
     }
 
