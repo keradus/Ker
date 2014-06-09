@@ -33,11 +33,11 @@ trait StaticPropertyTrait
      */
     public static function get()
     {
-        $func_num_args = func_num_args();
+        $argsCount = func_num_args();
 
-        if (!$func_num_args) {
+        if (!$argsCount) {
             throw new \BadMethodCallException("Parameter missing");
-        } elseif ($func_num_args === 1) {
+        } elseif ($argsCount === 1) {
             $name = func_get_arg(0);
             if (is_array($name)) {
                 $return = array();
@@ -108,8 +108,8 @@ trait StaticPropertyTrait
             $names = [$names, ];
         }
 
-        foreach ($names AS $item) {
-            static::removeOne($item);
+        foreach ($names AS $name) {
+            static::removeOne($name);
         }
     }
 
@@ -147,11 +147,11 @@ trait StaticPropertyTrait
      */
     public static function set()
     {
-        $func_num_args = func_num_args();
+        $argsCount = func_num_args();
 
-        if (!$func_num_args) {
+        if (!$argsCount) {
             throw new \BadMethodCallException("Parameter missing");
-        } elseif ($func_num_args === 1) {
+        } elseif ($argsCount === 1) {
             $arr = func_get_arg(0);
             if (!is_array($arr)) {
                 throw new \BadMethodCallException("Only one parameter, but it is not array");
@@ -159,7 +159,7 @@ trait StaticPropertyTrait
             foreach ($arr AS $key => $val) {
                 static::setOne($key, $val);
             }
-        } elseif ($func_num_args === 2) {
+        } elseif ($argsCount === 2) {
             $first = func_get_arg(0);
             $second = func_get_arg(1);
             if (is_array($first)) {
