@@ -117,6 +117,17 @@ trait StaticPropertyTrait
     }
 
     /**
+     * Metoda usuwająca wszystkie elementy.
+     *
+     * @static
+     * @public
+     */
+    public static function removeAll()
+    {
+        static::$container = array();
+    }
+
+    /**
      * Metoda usuwająca element.
      *
      * @static

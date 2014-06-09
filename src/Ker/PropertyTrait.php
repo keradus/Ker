@@ -112,6 +112,16 @@ trait PropertyTrait
     }
 
     /**
+     * Metoda usuwająca wszystkie elementy.
+     *
+     * @public
+     */
+    public function removeAll()
+    {
+        $this->container = array();
+    }
+
+    /**
      * Metoda usuwająca element.
      *
      * @public
