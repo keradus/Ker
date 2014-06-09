@@ -79,7 +79,7 @@ trait PropertyTrait
      */
     public function hasOne($_name)
     {
-        return isset($this->container[$_name]);
+        return array_key_exists($_name, $this->container);
     }
 
     /**

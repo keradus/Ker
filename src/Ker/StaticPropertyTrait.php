@@ -83,7 +83,7 @@ trait StaticPropertyTrait
      */
     public static function hasOne($_name)
     {
-        return isset(static::$container[$_name]);
+        return array_key_exists($_name, static::$container);
     }
 
     /**
