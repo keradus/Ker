@@ -1,6 +1,6 @@
 <?php
 
-namespace Ker\Converter;
+namespace Ker;
 
 /**
  * Statyczna klasa abstrakcyjna dostarczająca podstawową funkcjonalność konwertera danych.
@@ -11,7 +11,7 @@ namespace Ker\Converter;
  * @static
  * @abstract
  */
-abstract class AConverter
+abstract class Converter
 {
     /**
      * Kontener na cache kodowanych danych.
@@ -33,8 +33,8 @@ abstract class AConverter
 
     /**
      * Metoda wyliczająca skrót danych. Metoda służy do określenia klucza cache'owania.
-     * Domyślnie zwraca dane w formie niezmienionej, jednak w sytuacji gdy konwertowane dane mogą być obszerne należy przesłonić metodę
-     * zapewniając krótki format klucza.
+     * Domyślnie zwraca dane w formie skrótu md5, jednak w sytuacji gdy konwertowane dane będą bardzo krókie można należy przesłonić metodę
+     * i nie używać funkcji skrótu.
      *
      * @static
      * @protected
@@ -43,7 +43,7 @@ abstract class AConverter
      */
     protected static function computeHash($_data)
     {
-        return $_data;
+        return md5($_data);
     }
 
     /**

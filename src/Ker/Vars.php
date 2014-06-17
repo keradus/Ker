@@ -12,16 +12,9 @@ namespace Ker;
  * @date 2013-11-13 12:03:00
  * @abstract
  */
-abstract class AVars extends APropertyStatic
+abstract class Vars
 {
-
-    /**
-     * Kontener na dane.
-     *
-     * @static
-     * @protected
-     */
-    protected static $container;
+    use \Ker\StaticPropertyTrait;
 
     /**
      * Metoda sprawdzająca czy kontener zawiera jakiekolwiek elementy.

@@ -3,15 +3,14 @@
 namespace Ker\Converter;
 
 /**
- * Statyczna klasa kodująca nazwy domen IDN/ASCII.
+ * Statyczna klasa kodująca dane algorytmem JSON.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @license MIT
  * @link https://github.com/keradus/Ker
  * @static
- * @abstract
  */
-class IDN extends AConverter
+class JSON extends \Ker\Converter
 {
     /**
      * Kontener na cache kodowanych danych.
@@ -41,7 +40,14 @@ class IDN extends AConverter
      */
     protected static function decodeRaw($_data)
     {
-        return idn_to_utf8($_data);
+        $result = json_decode($_data, true);
+        $error = json_last_error();
+
+        if ($error !== JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException("JSON decode error: " . $error);
+        }
+
+        return $result;
     }
 
     /**
@@ -54,6 +60,13 @@ class IDN extends AConverter
      */
     protected static function encodeRaw($_data)
     {
-        return idn_to_ascii($_data);
+        $result = json_encode($_data);
+        $error = json_last_error();
+
+        if ($error !== JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException("JSON encode error: " . $error);
+        }
+
+        return $result;
     }
 }

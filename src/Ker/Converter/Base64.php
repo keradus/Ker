@@ -9,9 +9,8 @@ namespace Ker\Converter;
  * @license MIT
  * @link https://github.com/keradus/Ker
  * @static
- * @abstract
  */
-class Base64 extends AConverter
+class Base64 extends \Ker\Converter
 {
     /**
      * Kontener na cache kodowanych danych.
@@ -30,19 +29,6 @@ class Base64 extends AConverter
      * @protected
      */
     protected static $decodeCache = [];
-
-    /**
-     * Metoda wyliczająca skrót danych. Metoda służy do określenia klucza cache'owania.
-     *
-     * @static
-     * @public
-     * @param string tekst
-     * @return string skrót tekstu
-     */
-    protected static function computeHash($_data)
-    {
-        return sha1($_data);
-    }
 
     /**
      * Metoda dekodująca.
