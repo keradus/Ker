@@ -19,7 +19,7 @@ class Base64 extends \Ker\Converter
      * @static
      * @protected
      */
-    protected static $encodeCache = [];
+    protected static $encodeCache = array();
 
     /**
      * Kontener na cache dekodowanych danych.
@@ -28,7 +28,7 @@ class Base64 extends \Ker\Converter
      * @static
      * @protected
      */
-    protected static $decodeCache = [];
+    protected static $decodeCache = array();
 
     /**
      * Metoda dekodująca.

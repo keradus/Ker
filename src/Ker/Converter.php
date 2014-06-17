@@ -20,7 +20,7 @@ abstract class Converter
      * @static
      * @protected
      */
-    protected static $encodeCache = [];
+    protected static $encodeCache = array();
 
     /**
      * Kontener na cache dekodowanych danych.
@@ -29,7 +29,7 @@ abstract class Converter
      * @static
      * @protected
      */
-    protected static $decodeCache = [];
+    protected static $decodeCache = array();
 
     /**
      * Metoda wyliczająca skrót danych. Metoda służy do określenia klucza cache'owania.
