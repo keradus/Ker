@@ -40,17 +40,17 @@ trait PropertyTrait
             if (is_array($name)) {
                 $return = array();
                 foreach ($name AS $item) {
-                    $return[$item] = static::getOne($item);
+                    $return[$item] = $this->getOne($item);
                 }
 
                 return $return;
             }
 
-            return static::getOne($name);
+            return $this->getOne($name);
         } else {
             $return = array();
             foreach (func_get_args() AS $name) {
-                $return[$name] = static::getOne($name);
+                $return[$name] = $this->getOne($name);
             }
 
             return $return;
@@ -67,7 +67,7 @@ trait PropertyTrait
      */
     public function getOne($_name, $_value = NULL)
     {
-        return static::hasOne($_name) ? $this->container[$_name] : $_value;
+        return $this->hasOne($_name) ? $this->container[$_name] : $_value;
     }
 
     /**
@@ -104,7 +104,7 @@ trait PropertyTrait
         }
 
         foreach ($names AS $name) {
-            static::removeOne($name);
+            $this->removeOne($name);
         }
     }
 
@@ -149,7 +149,7 @@ trait PropertyTrait
                 throw new \BadMethodCallException("Only one parameter, but it is not array");
             }
             foreach ($arr AS $key => $val) {
-                static::setOne($key, $val);
+                $this->setOne($key, $val);
             }
         } elseif ($argsCount === 2) {
             $first = func_get_arg(0);
@@ -163,10 +163,10 @@ trait PropertyTrait
                 }
                 $arr = array_combine($first, $second);
                 foreach ($arr AS $key => $val) {
-                    static::setOne($key, $val);
+                    $this->setOne($key, $val);
                 }
             } else {
-                static::setOne($first, $second);
+                $this->setOne($first, $second);
             }
         } else {
             throw new \BadMethodCallException("Too many arguments");
