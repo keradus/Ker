@@ -35,26 +35,20 @@ trait PropertyTrait
 
         if (!$argsCount) {
             throw new \BadMethodCallException("Parameter missing");
-        } elseif ($argsCount === 1) {
-            $name = func_get_arg(0);
-            if (is_array($name)) {
-                $return = array();
-                foreach ($name AS $item) {
-                    $return[$item] = $this->getOne($item);
-                }
-
-                return $return;
-            }
-
-            return $this->getOne($name);
-        } else {
-            $return = array();
-            foreach (func_get_args() AS $name) {
-                $return[$name] = $this->getOne($name);
-            }
-
-            return $return;
         }
+
+        $names = (($argsCount > 1) ? func_get_args() : func_get_arg(0));
+
+        if (!is_array($names)) {
+            return $this->getOne($names);
+        }
+
+        $return = array();
+        foreach ($names AS $name) {
+            $return[$name] = $this->getOne($name);
+        }
+
+        return $return;
     }
 
     /**
