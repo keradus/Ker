@@ -1,6 +1,6 @@
 <?php
 
-namespace Ker\Ex;
+namespace Ker\CRUD;
 
 /**
  * Klasa wyjątku rzucanego w sytuacji braku szukanych danych.
