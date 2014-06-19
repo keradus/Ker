@@ -20,7 +20,7 @@ trait PropertyTrait
      *
      * @protected
      */
-    protected $container = array();
+    protected $container = [];
 
     /**
      * Metoda pobierająca elementy.
@@ -43,7 +43,7 @@ trait PropertyTrait
             return $this->getOne($names);
         }
 
-        $return = array();
+        $return = [];
         foreach ($names AS $name) {
             $return[$name] = $this->getOne($name);
         }
@@ -109,7 +109,7 @@ trait PropertyTrait
      */
     public function removeAll()
     {
-        $this->container = array();
+        $this->container = [];
     }
 
     /**
@@ -143,7 +143,7 @@ trait PropertyTrait
             throw new \BadMethodCallException("Too many arguments");
         }
 
-        $dictionary = array();
+        $dictionary = [];
 
         if ($argsCount === 1) {
             $dictionary = func_get_arg(0);

@@ -21,7 +21,7 @@ trait StaticPropertyTrait
      * @static
      * @protected
      */
-    protected static $container = array();
+    protected static $container = [];
 
     /**
      * Metoda pobierająca elementy.
@@ -45,7 +45,7 @@ trait StaticPropertyTrait
             return static::getOne($names);
         }
 
-        $return = array();
+        $return = [];
         foreach ($names AS $name) {
             $return[$name] = static::getOne($name);
         }
@@ -115,7 +115,7 @@ trait StaticPropertyTrait
      */
     public static function removeAll()
     {
-        static::$container = array();
+        static::$container = [];
     }
 
     /**
@@ -151,7 +151,7 @@ trait StaticPropertyTrait
             throw new \BadMethodCallException("Too many arguments");
         }
 
-        $dictionary = array();
+        $dictionary = [];
 
         if ($argsCount === 1) {
             $dictionary = func_get_arg(0);
