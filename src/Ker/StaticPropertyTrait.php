@@ -145,33 +145,41 @@ trait StaticPropertyTrait
 
         if (!$argsCount) {
             throw new \BadMethodCallException("Parameter missing");
-        } elseif ($argsCount === 1) {
-            $arr = func_get_arg(0);
-            if (!is_array($arr)) {
+        }
+
+        if ($argsCount > 2) {
+            throw new \BadMethodCallException("Too many arguments");
+        }
+
+        $dictionary = array();
+
+        if ($argsCount === 1) {
+            $dictionary = func_get_arg(0);
+
+            if (!is_array($dictionary)) {
                 throw new \BadMethodCallException("Only one parameter, but it is not array");
             }
-            foreach ($arr AS $key => $val) {
-                static::setOne($key, $val);
-            }
         } elseif ($argsCount === 2) {
-            $first = func_get_arg(0);
-            $second = func_get_arg(1);
-            if (is_array($first)) {
-                if (!is_array($second)) {
+            $keys = func_get_arg(0);
+            $args = func_get_arg(1);
+
+            if (is_array($keys)) {
+                if (!is_array($args)) {
                     throw new \BadMethodCallException("The first parameter is array, but the second does not");
                 }
-                if (count($first) !== count($second)) {
+
+                if (count($keys) !== count($args)) {
                     throw new \BadMethodCallException("Passed arrays are of different sizes");
                 }
-                $arr = array_combine($first, $second);
-                foreach ($arr AS $key => $val) {
-                    static::setOne($key, $val);
-                }
+
+                $dictionary = array_combine($keys, $args);
             } else {
-                static::setOne($first, $second);
+                $dictionary[$keys] = $args;
             }
-        } else {
-            throw new \BadMethodCallException("Too many arguments");
+        }
+
+        foreach ($dictionary AS $key => $val) {
+            static::setOne($key, $val);
         }
     }
 
