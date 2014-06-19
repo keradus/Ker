@@ -97,7 +97,7 @@ class Debug
      */
     public static function prePrint(/* list */)
     {
-        foreach (func_get_args() AS $data) {
+        foreach (func_get_args() as $data) {
             echo "<pre style='border: blue solid 1px;'>", print_r($data, true), "</pre>";
         }
     }
@@ -111,7 +111,7 @@ class Debug
      */
     public static function preDump(/* list */)
     {
-        foreach (func_get_args() AS $data) {
+        foreach (func_get_args() as $data) {
             echo "<pre style='border: blue solid 1px;'>", var_dump($data), "</pre>";
         }
     }

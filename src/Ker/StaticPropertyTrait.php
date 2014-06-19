@@ -46,7 +46,7 @@ trait StaticPropertyTrait
         }
 
         $return = [];
-        foreach ($names AS $name) {
+        foreach ($names as $name) {
             $return[$name] = static::getOne($name);
         }
 
@@ -102,7 +102,7 @@ trait StaticPropertyTrait
             $names = [$names, ];
         }
 
-        foreach ($names AS $name) {
+        foreach ($names as $name) {
             static::removeOne($name);
         }
     }
@@ -178,7 +178,7 @@ trait StaticPropertyTrait
             }
         }
 
-        foreach ($dictionary AS $key => $val) {
+        foreach ($dictionary as $key => $val) {
             static::setOne($key, $val);
         }
     }

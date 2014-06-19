@@ -137,7 +137,7 @@ abstract class CRUD
 
         $ret = array();
 
-        foreach ($where AS $k => $v) {
+        foreach ($where as $k => $v) {
             $tmp = static::buildWhere_extraField($k, $v);
             if ($tmp !== NULL) {
                 $ret[] = $tmp;
@@ -171,7 +171,7 @@ abstract class CRUD
     protected static function buildSelect($_)
     {
         $queryFields = (isset($_["fields"]) ? $_["fields"] : array_keys(static::$fields));
-        foreach ($queryFields AS & $field) {
+        foreach ($queryFields as & $field) {
             $field = "`$field` AS '$field'";
         }
 
@@ -306,7 +306,7 @@ abstract class CRUD
             $name = func_get_arg(0);
             if (is_array($name)) {
                 $return = array();
-                foreach ($name AS $item) {
+                foreach ($name as $item) {
                     $return[$item] = static::$fields[$item];
                 }
 
@@ -317,7 +317,7 @@ abstract class CRUD
         }
 
         $return = array();
-        foreach (func_get_args() AS $item) {
+        foreach (func_get_args() as $item) {
             $return[$item] = static::$fields[$item];
         }
 
@@ -375,7 +375,7 @@ abstract class CRUD
             $this->isNew = false;
 
             $queryFields = array_keys(static::$fields);
-            foreach ($queryFields AS & $field) {
+            foreach ($queryFields as & $field) {
                 $field = "`$field` AS '$field'";
             }
 
@@ -388,12 +388,12 @@ abstract class CRUD
             }
         }
 
-        if (isset($_["prepared"]) AND is_array($_["prepared"])) {
+        if (isset($_["prepared"]) and is_array($_["prepared"])) {
             $fields = array_merge($fields, $_["prepared"]);
         }
 
         if ($fields) {
-            foreach ($fields AS $key => $value) {
+            foreach ($fields as $key => $value) {
                 $this->setOneSilently($key, $value);
             }
         }
@@ -449,7 +449,7 @@ abstract class CRUD
         $params = array();
 
         $fields = $this->modified;
-        foreach ($fields AS $key => & $value) {
+        foreach ($fields as $key => & $value) {
             $value = "`" . static::$fields[$key] . "` = :$key";
             $params[":$key"] = $this->getOne($key);
         }

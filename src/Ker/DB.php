@@ -142,7 +142,7 @@ class DB
     public function escape($_value)
     {
         if (is_array($_value)) {
-            foreach ($_value AS $key => $val) {
+            foreach ($_value as $key => $val) {
                 $_value[$key] = substr($this->instance->quote($val), 1, -1);
             }
 

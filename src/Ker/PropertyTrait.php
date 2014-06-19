@@ -44,7 +44,7 @@ trait PropertyTrait
         }
 
         $return = [];
-        foreach ($names AS $name) {
+        foreach ($names as $name) {
             $return[$name] = $this->getOne($name);
         }
 
@@ -97,7 +97,7 @@ trait PropertyTrait
             $names = [$names, ];
         }
 
-        foreach ($names AS $name) {
+        foreach ($names as $name) {
             $this->removeOne($name);
         }
     }
@@ -170,7 +170,7 @@ trait PropertyTrait
             }
         }
 
-        foreach ($dictionary AS $key => $val) {
+        foreach ($dictionary as $key => $val) {
             $this->setOne($key, $val);
         }
     }
