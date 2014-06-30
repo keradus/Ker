@@ -97,7 +97,7 @@ abstract class APropertyStatic
         $names = (($argsCount > 1) ? func_get_args() : func_get_arg(0));
 
         if (!is_array($names)) {
-            $names = [$names, ];
+            $names = array($names, );
         }
 
         foreach ($names as $name) {
