@@ -232,7 +232,7 @@ class DB
     {
         $return = self::select("$_sql LIMIT 1", $_params);
 
-        return (isset($return[0]) && count($return[0]) ? array_pop($return[0]) : NULL);
+        return (isset($return[0]) && count($return[0]) ? array_pop($return[0]) : null);
     }
 
     /**
@@ -260,7 +260,7 @@ class DB
      * @param string $_sql zapytanie SQL
      * @param array [opt = NULL] $_value parametry dla zapytania SQL
      */
-    public function showDebug($_type, $_sql = NULL, $_params = NULL)
+    public function showDebug($_type, $_sql = null, $_params = null)
     {
         if (!isset($this->debug[$_type])) {
             throw new \InvalidArgumentException();
@@ -272,7 +272,7 @@ class DB
 
         $sqlFull = (($_sql && $_params)
             ? str_replace (array_keys($_params), array_map(function ($_) {return "'$_'";}, array_values($_params)), $_sql)
-            : NULL
+            : null
         );
 
         \Ker\Utils\Debug::dmp(array("trace" => false, "memory" => false,), "SQL DEBUG TYPE: " . strtoupper($_type), $_sql, $_params, $sqlFull);

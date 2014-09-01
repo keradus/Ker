@@ -59,7 +59,7 @@ trait PropertyTrait
      * @param mixed $_value wartość zwracana w przypadku braku elementu w zasobie, domyślnie [NULL]
      * @return mixed element
      */
-    public function getOne($_name, $_value = NULL)
+    public function getOne($_name, $_value = null)
     {
         return $this->hasOne($_name) ? $this->container[$_name] : $_value;
     }

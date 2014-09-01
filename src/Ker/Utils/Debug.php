@@ -85,7 +85,7 @@ class Debug
      */
     public static function dump(/* list */)
     {
-        return self::dmp(NULL, func_get_args());
+        return self::dmp(null, func_get_args());
     }
 
     /**

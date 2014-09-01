@@ -37,7 +37,7 @@ abstract class Vars
      * @param mixed $_value wartość zwracana w przypadku braku elementu w zasobie, domyślnie [NULL]
      * @return mixed element
      */
-    public static function getOne($_name, $_value = NULL)
+    public static function getOne($_name, $_value = null)
     {
         $ret = parent::getOne($_name, $_value);
 
@@ -53,7 +53,7 @@ abstract class Vars
      * @param mixed $_value wartość zwracana w przypadku braku elementu w zasobie, domyślnie [NULL]
      * @return mixed element
      */
-    public static function getOneRaw($_name, $_value = NULL)
+    public static function getOneRaw($_name, $_value = null)
     {
         $ret = parent::getOne($_name, $_value);
 

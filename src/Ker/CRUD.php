@@ -192,7 +192,7 @@ abstract class CRUD
      * @param mixed klucz główny tabeli
      * @return int ilość usuniętych rekordów
      */
-    public static function destroy($_ = NULL)
+    public static function destroy($_ = null)
     {
         $sql = "DELETE FROM `" . static::$table . "` WHERE `" . static::$fields["PK"] . "` = :pk";
 
@@ -238,7 +238,7 @@ abstract class CRUD
      *  countOnly => [opt] na wyjściu zamiast instancji obiektów otrzymamy ilość pasujących rekordów
      * @return array tablica utworzonych obiektów lub ich ilosc jesli ustawiono parametr countOnly
      */
-    public static function factory($_ = NULL)
+    public static function factory($_ = null)
     {
         $query = static::buildSelect($_);
         $items = static::getDbHandler()->select($query);
@@ -268,7 +268,7 @@ abstract class CRUD
 
     public static function getDbHandler()
     {
-        static $handler = NULL;
+        static $handler = null;
 
         if (!$handler) {
             $handler = \Ker\Config::getOne("SQL");
@@ -349,7 +349,7 @@ abstract class CRUD
      * @return Ker\CRUD instancja klasy dziedziczącej
      * @exception Ker\Ex\NoData - wyjątek rzucany w sytuacji, gdy zlecono załadowanie nieistniejącego obiektu
      */
-    public function __construct($_ = NULL)
+    public function __construct($_ = null)
     {
         $this->isNew = true;
 
@@ -405,7 +405,7 @@ abstract class CRUD
      * @public
      * @return int ilość usuniętych rekordów, uwaga - jeśli zlecimy usunięcie nowego, niezapisanego rekordu - otrzymamy 0, które nie będzie jednak błędem
      */
-    public function delete($_ = NULL)
+    public function delete($_ = null)
     {
         if ($this->isNew || !$this->hasOne("PK")) {
             return 0;
@@ -443,9 +443,9 @@ abstract class CRUD
      * @public
      * @return mixed identyfikator zapisanego obiektu
      */
-    public function save($_ = NULL)
+    public function save($_ = null)
     {
-        $sql = NULL;
+        $sql = null;
         $params = array();
 
         $fields = $this->modified;

@@ -62,7 +62,7 @@ trait StaticPropertyTrait
      * @param mixed $_value wartość zwracana w przypadku braku elementu w zasobie, domyślnie [NULL]
      * @return mixed element
      */
-    public static function getOne($_name, $_value = NULL)
+    public static function getOne($_name, $_value = null)
     {
         return static::hasOne($_name) ? static::$container[$_name] : $_value;
     }
