@@ -1,6 +1,6 @@
 <?php
 
-namespace Ker\CRUD;
+namespace Ker;
 
 /**
  * Klasa abstrakcyjna realizująca interfejs CRUD.\n
@@ -13,8 +13,9 @@ namespace Ker\CRUD;
  * @date 2013-09-15 20:56:10
  * @abstract
  */
-abstract class ADB extends \Ker\AProperty implements ICRUD
+abstract class CRUD
 {
+    use \Ker\PropertyTrait;
 
     /**
      * Nazwa tabeli w bazie danych.
@@ -136,7 +137,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
 
         $ret = array();
 
-        foreach ($where AS $k => $v) {
+        foreach ($where as $k => $v) {
             $tmp = static::buildWhere_extraField($k, $v);
             if ($tmp !== NULL) {
                 $ret[] = $tmp;
@@ -170,7 +171,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
     protected static function buildSelect($_)
     {
         $queryFields = (isset($_["fields"]) ? $_["fields"] : array_keys(static::$fields));
-        foreach ($queryFields AS & $field) {
+        foreach ($queryFields as & $field) {
             $field = "`$field` AS '$field'";
         }
 
@@ -191,7 +192,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      * @param mixed klucz główny tabeli
      * @return int ilość usuniętych rekordów
      */
-    public static function destroy($_ = NULL)
+    public static function destroy($_ = null)
     {
         $sql = "DELETE FROM `" . static::$table . "` WHERE `" . static::$fields["PK"] . "` = :pk";
 
@@ -237,7 +238,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      *  countOnly => [opt] na wyjściu zamiast instancji obiektów otrzymamy ilość pasujących rekordów
      * @return array tablica utworzonych obiektów lub ich ilosc jesli ustawiono parametr countOnly
      */
-    public static function factory($_ = NULL)
+    public static function factory($_ = null)
     {
         $query = static::buildSelect($_);
         $items = static::getDbHandler()->select($query);
@@ -249,10 +250,11 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
         $calledClass = get_called_class();
 
         return array_map(function (& $item) use ($calledClass) {
-                    $obj = new $calledClass(array("prepared" => $item));
-                    $obj->isNew = false;
-                    return $obj;
-                }, $items);
+            $obj = new $calledClass(array("prepared" => $item));
+            $obj->isNew = false;
+
+            return $obj;
+        }, $items);
     }
 
     /**
@@ -266,7 +268,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
 
     public static function getDbHandler()
     {
-        static $handler = NULL;
+        static $handler = null;
 
         if (!$handler) {
             $handler = \Ker\Config::getOne("SQL");
@@ -304,7 +306,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
             $name = func_get_arg(0);
             if (is_array($name)) {
                 $return = array();
-                foreach ($name AS $item) {
+                foreach ($name as $item) {
                     $return[$item] = static::$fields[$item];
                 }
 
@@ -315,7 +317,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
         }
 
         $return = array();
-        foreach (func_get_args() AS $item) {
+        foreach (func_get_args() as $item) {
             $return[$item] = static::$fields[$item];
         }
 
@@ -344,10 +346,10 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      *  loadPk => [opt] ładuje obiekt o zadanym PK, jeśli nie podano parametru - tworzy nowy rekord\n
      *  load_pk => [opt] alias dla loadPk\n
      *  prepared => [opt] uzupełnia pola na podstawie otrzymanej tablicy, nie oznacza pól w $modified
-     * @return Ker\CRUD\ADB instancja klasy dziedziczącej
+     * @return Ker\CRUD instancja klasy dziedziczącej
      * @exception Ker\Ex\NoData - wyjątek rzucany w sytuacji, gdy zlecono załadowanie nieistniejącego obiektu
      */
-    public function __construct($_ = NULL)
+    public function __construct($_ = null)
     {
         $this->isNew = true;
 
@@ -373,7 +375,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
             $this->isNew = false;
 
             $queryFields = array_keys(static::$fields);
-            foreach ($queryFields AS & $field) {
+            foreach ($queryFields as & $field) {
                 $field = "`$field` AS '$field'";
             }
 
@@ -382,16 +384,16 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
             $fields = static::getDbHandler()->selectOne($sql, array(":pk" => $pk));
 
             if (!$fields) {
-                throw new \Ker\Ex\NoData("Item not exists");
+                throw new \Ker\CRUD\NoDataException("Item not exists");
             }
         }
 
-        if (isset($_["prepared"]) AND is_array($_["prepared"])) {
+        if (isset($_["prepared"]) and is_array($_["prepared"])) {
             $fields = array_merge($fields, $_["prepared"]);
         }
 
         if ($fields) {
-            foreach ($fields AS $key => $value) {
+            foreach ($fields as $key => $value) {
                 $this->setOneSilently($key, $value);
             }
         }
@@ -403,7 +405,7 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      * @public
      * @return int ilość usuniętych rekordów, uwaga - jeśli zlecimy usunięcie nowego, niezapisanego rekordu - otrzymamy 0, które nie będzie jednak błędem
      */
-    public function delete($_ = NULL)
+    public function delete($_ = null)
     {
         if ($this->isNew || !$this->hasOne("PK")) {
             return 0;
@@ -441,13 +443,13 @@ abstract class ADB extends \Ker\AProperty implements ICRUD
      * @public
      * @return mixed identyfikator zapisanego obiektu
      */
-    public function save($_ = NULL)
+    public function save($_ = null)
     {
-        $sql = NULL;
+        $sql = null;
         $params = array();
 
         $fields = $this->modified;
-        foreach ($fields AS $key => & $value) {
+        foreach ($fields as $key => & $value) {
             $value = "`" . static::$fields[$key] . "` = :$key";
             $params[":$key"] = $this->getOne($key);
         }

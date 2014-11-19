@@ -1,20 +1,20 @@
 <?php
 
-namespace Ker;
+namespace Ker\Vars;
 
 /**
- * Klasa implementująca wzorzec projektowy `Property`. Służy do zarządzania zmiennymi otrzymanymi metodą GET.
+ * Klasa implementująca wzorzec projektowy `Property`. Służy do zarządzania zmiennymi otrzymanymi z ciasteczek.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @license MIT
  * @link https://github.com/keradus/Ker
  * @date 2013-11-13 12:03:00
  */
-class VarsGet extends AVars
+class Cookie extends \Ker\Vars
 {
 
     protected static $container;
 
 }
 
-VarsGet::setContainer($_GET);
+Cookie::setContainer($_COOKIE);

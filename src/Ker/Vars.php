@@ -12,16 +12,9 @@ namespace Ker;
  * @date 2013-11-13 12:03:00
  * @abstract
  */
-abstract class AVars extends APropertyStatic
+abstract class Vars
 {
-
-    /**
-     * Kontener na dane.
-     *
-     * @static
-     * @protected
-     */
-    protected static $container;
+    use \Ker\StaticPropertyTrait;
 
     /**
      * Metoda sprawdzająca czy kontener zawiera jakiekolwiek elementy.
@@ -44,7 +37,7 @@ abstract class AVars extends APropertyStatic
      * @param mixed $_value wartość zwracana w przypadku braku elementu w zasobie, domyślnie [NULL]
      * @return mixed element
      */
-    public static function getOne($_name, $_value = NULL)
+    public static function getOne($_name, $_value = null)
     {
         $ret = parent::getOne($_name, $_value);
 
@@ -60,7 +53,7 @@ abstract class AVars extends APropertyStatic
      * @param mixed $_value wartość zwracana w przypadku braku elementu w zasobie, domyślnie [NULL]
      * @return mixed element
      */
-    public static function getOneRaw($_name, $_value = NULL)
+    public static function getOneRaw($_name, $_value = null)
     {
         $ret = parent::getOne($_name, $_value);
 

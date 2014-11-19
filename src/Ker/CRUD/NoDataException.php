@@ -1,16 +1,16 @@
 <?php
 
-namespace Ker\Ex;
+namespace Ker\CRUD;
 
 /**
- * Klasa uszczególniająca wyjątek logiczny (LogicException) - rzucany w sytuacji braku oczekiwanych danych.
+ * Klasa wyjątku rzucanego w sytuacji braku szukanych danych.
  *
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
  * @license MIT
  * @link https://github.com/keradus/Ker
  * @date 2013-09-15 20:25:13
  */
-class NoData extends \LogicException
+class NoDataException extends \RuntimeException
 {
 
 }
