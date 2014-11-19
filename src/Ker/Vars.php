@@ -72,6 +72,8 @@ abstract class Vars
      */
     public static function getHtmlEncoded()
     {
+        //TODO: dodac cos na ksztalt: trigger_error('Use get() instead', E_USER_DEPRECATED);
+
         return forward_static_call_array(array("static", "get"), func_get_args());
     }
 
